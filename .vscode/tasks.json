@@ -10,9 +10,16 @@
             "args": [
                 "-Wall",
                 "-Werror",
+                // "-Wpedantic",
+                "-Wshadow",
                 "-std=gnu11",
                 "-g",
+                "-O0",
                 "-lm",
+                "-ldl",
+                "-m32",
+                "-D_GNU_SOURCE",
+                "-fsanitize=undefined",
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"

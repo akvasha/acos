@@ -38,13 +38,18 @@ func Start() {
 		{
 			Name:    "test",
 			Aliases: []string{"t"},
-			Usage:   "Create new task",
+			Usage:   "Test source code",
 			Action:  testAction,
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "src, s",
 					Value: "main.c",
 					Usage: "Compile source `FILE`",
+				},
+				cli.StringFlag{
+					Name:  "tests, t",
+					Value: "tests",
+					Usage: "Tests `DIR`",
 				},
 			},
 		},
@@ -59,6 +64,16 @@ func Start() {
 			Aliases: []string{"g"},
 			Usage:   "WIP",
 			Action:  genAction,
+		},
+		{
+			Name:   "conf",
+			Usage:  "Print current loaded config",
+			Action: confAction,
+		},
+		{
+			Name: "compile",
+			Usage: "Just compile",
+			Action: compileAction,
 		},
 	}
 

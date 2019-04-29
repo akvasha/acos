@@ -3,10 +3,15 @@ package gen
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/bclicn/color"
-	"github.com/petuhovskiy/acos/tool/def"
+)
+
+var (
+	OK = color.BGreen("OK")
+	WA = color.BRed("WA")
 )
 
 func Init() {
@@ -35,13 +40,40 @@ func Test(f func() error, cnt int) {
 		fmt.Print(color.Bold(fmt.Sprintf("> Test %3d = ", i)))
 		err := f()
 		if err == nil {
-			fmt.Println(def.OK)
+			fmt.Println(OK)
 			ok++
 		} else {
-			fmt.Println(def.WA, err)
+			fmt.Println(WA, err)
 			wa++
 		}
 	}
-	fmt.Println(def.OK, ok)
-	fmt.Println(def.WA, wa)
+	fmt.Println(OK, ok)
+	fmt.Println(WA, wa)
+}
+
+const (
+	loweralpha   = "qwertyuiopasdfghjklzxcvbnm"
+	upperalpha   = "QWERTYUIOPASDFGHJKLZXCVBNM"
+	numeric      = "0123456789"
+	alphanumeric = loweralpha + upperalpha + numeric
+)
+
+func AnyChar(s string) byte {
+	return s[rand.Intn(len(s))]
+}
+
+func GenString(dict string, ln int) string {
+	b := strings.Builder{}
+	for i := 0; i < ln; i++ {
+		b.WriteByte(AnyChar(dict))
+	}
+	return b.String()
+}
+
+func Alnum(ln int) string {
+	return GenString(alphanumeric, ln)
+}
+
+func Ab(ln int) string {
+	return GenString("ab", ln)
 }

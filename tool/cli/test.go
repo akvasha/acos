@@ -18,13 +18,28 @@ func testAction(c *cli.Context) error {
 	if !strings.HasSuffix(src, ".c") {
 		return errors.New("source file must ends in '.c'")
 	}
+	tests := c.String("tests")
 	opts := tool.TestOptions{
 		Source:     src,
 		Executable: "./" + strings.TrimSuffix(src, ".c"),
-		TestsDir:   "tests",
+		TestsDir:   tests,
 	}
 
 	return tool.TestTask(opts)
+}
+
+func compileAction(c *cli.Context) error {
+	conf := def.LoadConfig()
+
+	tool.Action("Compile")
+	err := tool.Compile(tool.CompileOptions{
+		Src: conf.Defaults.Source,
+		Dst: conf.Defaults.Exe,
+		Log: true,
+	})
+	tool.FError("Compilation error", err)
+
+	return nil
 }
 
 func addTestAction(c *cli.Context) error {
